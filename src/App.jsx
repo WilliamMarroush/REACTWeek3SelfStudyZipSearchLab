@@ -3,11 +3,17 @@ import "./App.css";
 const zipInfoURL = 'https://ctp-zip-code-api.onrender.com/zip/';
 
 function City({searchZip}) {
-  return (
-    <>
-      <p>Entered Zip: {searchZip}</p>
-    </>
-  );
+  if (searchZip){
+    return (
+      <>
+        <p>Entered Zip:  {searchZip.Zipcode}</p>
+        <p>City: {searchZip.City}</p>
+        <p>State:  {searchZip.State}</p>
+        <p>Country:  {searchZip.Country}</p>
+        <p>Population:  {searchZip.EstimatedPopulation}</p>
+      </>
+    );
+  }
 }
 
 function ZipSearchField({onZipChange, onZipSearch}) {
@@ -49,20 +55,19 @@ function App() {
         const response = await fetch(zipInfoURL + zip);
         const json = await response.json();
 
-        setZipData(json);
-        console.log(zipData);
+        setZipData(json[0]);
       } catch (error) {
         console.error("Error fetching zip data: ", error);
       }
     }
   };
 
-  // Effect to fetch zip data when `enteredZip` changes
+
   useEffect(() => {
     if (enteredZip) {
       fetchZipData(enteredZip);
     }
-  }, [enteredZip]); // Dependency array ensures this runs only when `enteredZip` changes
+  }, [enteredZip]); 
 
   const updateZip = (zip) => {
     setEnteredZip(zip);
@@ -83,7 +88,7 @@ function App() {
       <div className="mx-auto" style={{ maxWidth: 400 }}>
         <ZipSearchField onZipChange={updateZip} onZipSearch={fetchZipData} />
         <div>
-          <City searchZip={enteredZip} />
+          <City searchZip={zipData} />
         </div>
       </div>
     </div>

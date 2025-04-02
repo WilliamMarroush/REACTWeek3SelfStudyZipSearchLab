@@ -6,11 +6,14 @@ function City({searchZip}) {
   if (searchZip){
     return (
       <>
-        <p>Entered Zip:  {searchZip.Zipcode}</p>
-        <p>City: {searchZip.City}</p>
-        <p>State:  {searchZip.State}</p>
-        <p>Country:  {searchZip.Country}</p>
-        <p>Population:  {searchZip.EstimatedPopulation}</p>
+      <h3 className = "wide-block rounded-3 text-center">{searchZip.City}, {searchZip.State}</h3>
+      <ul className = "border border-3">
+        <li>Entered Zip:  {searchZip.Zipcode}</li>
+        <li>City: {searchZip.City}</li>
+        <li>State:  {searchZip.State}</li>
+        <li>Country:  {searchZip.Country}</li>
+        <li>Population:  {searchZip.EstimatedPopulation}</li>
+      </ul>
       </>
     );
   }
@@ -46,6 +49,7 @@ function ZipSearchField({onZipChange, onZipSearch}) {
 function App() {
   const [enteredZip, setEnteredZip] = useState(null);
   const [zipData, setZipData] = useState(null);
+  const [zipStatus,setZipStatus] = useState(false);
 
   // Function to fetch zip data
   const fetchZipData = async (zip) => {
